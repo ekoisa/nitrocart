@@ -82,43 +82,21 @@ class Admin_products extends Admin_Controller
 
     public function custom_fields()
     {
-        $assignments = $this->streams->streams->get_assignments($this->stream, $this->namespace);
+        $custom_fields = $this->products_m->get_custom_fields();
 
-        foreach ($assignments as $key => $value)
-        {
-            if ($value->is_locked == 'yes')
-                unset($assignments[$key]);
-        }
-
-        $is_empty = count($assignments) == 0 ? true : false;
-
-        if(!$is_empty)
-        {
-            foreach ($assignments as $assigment)
-            {
-                if(in_array($assigment->field_slug, unserialize($assigment->stream_view_options)))
-                    $assigment->view_options = true;
-            }
-        }
+        $is_empty = count($custom_fields) == 0 ? true : false;
 
         $this->template->title(ucfirst($this->section))
         ->set('namespace', $this->namespace)
         ->set('stream', $this->stream)
-        ->set('assignments', $assignments)
+        ->set('custom_fields', $custom_fields)
         ->set('is_empty', $is_empty)
         ->build('core/products/admin/custom_fields');        
     }
 
     public function enable_custom_field($field_slug)
     {
-        $stream = $this->streams->streams->get_stream($this->stream, $this->namespace);
-        $view_options = $stream->view_options;
-        $view_options[] = $field_slug;
-
-        $update_data = array(
-            'view_options' => $view_options
-            );
-        $this->streams->streams->update_stream($this->stream, $this->namespace, $update_data);
+        $this->products_m->enable_custom_field($field_slug);
 
         $this->session->set_flashdata('success', lang($this->namespace.':message:success'));
         redirect('admin/'.$this->namespace.'/'.$this->stream.'/custom_fields');        
@@ -126,16 +104,7 @@ class Admin_products extends Admin_Controller
 
     public function disable_custom_field($field_slug)
     {
-        $stream = $this->streams->streams->get_stream($this->stream, $this->namespace);
-        $view_options = $stream->view_options;
-
-        if(($key = array_search($field_slug, $view_options)) !== false)
-            unset($view_options[$key]);
-
-        $update_data = array(
-            'view_options' => $view_options
-            );
-        $this->streams->streams->update_stream($this->stream, $this->namespace, $update_data);
+        $this->products_m->disable_custom_field($field_slug);
 
         $this->session->set_flashdata('success', lang($this->namespace.':message:success'));
         redirect('admin/'.$this->namespace.'/'.$this->stream.'/custom_fields');        
