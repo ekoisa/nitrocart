@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * NitroCart
@@ -22,19 +22,13 @@ class Admin_modules extends Admin_Controller
         parent::__construct();
         $this->load->driver('streams');
         $this->load->language('nitrocart_admin');
+        $this->load->model('core/modules_m');
     }
 
     public function index()
     {
-        $params = array(
-            'stream' => $this->stream,
-            'namespace' => $this->namespace,
-            'where' => '`core` = "0"',
-            );
-        $addon_modules = $this->streams->entries->get_entries($params);
-
-        $params['where'] = '`core` = "1"';
-        $core_modules = $this->streams->entries->get_entries($params);
+        $addon_modules = $this->modules_m->get_core_modules();
+        $core_modules = $this->modules_m->get_addon_modules();
 
         $this->template->title(ucfirst($this->section))
         ->set('namespace', $this->namespace)
