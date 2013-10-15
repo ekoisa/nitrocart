@@ -88,4 +88,4 @@ class Admin_settings extends Admin_Controller
     }
 }
 
-/* End of file admin_products.php */
+/* End of file admin_settings.php */

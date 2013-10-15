@@ -44,3 +44,5 @@ class Modules_m extends MY_Model
     }
 
 }
+
+/* End of file modules_m.php */

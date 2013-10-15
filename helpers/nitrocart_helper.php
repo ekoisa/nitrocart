@@ -86,4 +86,4 @@ if( ! function_exists('create_alt_pagination'))
     }
 }
 
-/* End of file tools_helper.php */
+/* End of file nitrocart_helper.php */

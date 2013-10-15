@@ -29,4 +29,4 @@ $lang['nitrocart:label:core_modules']  = 'Core Modules';
 -------------------------------------------------- */
 $lang['nitrocart:label:custom_fields'] = 'Custom Fields';
 
-/* End of file showcase_admin_lang.php */
+/* End of file nitrocart_admin_lang.php */

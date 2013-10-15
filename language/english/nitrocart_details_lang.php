@@ -61,4 +61,4 @@ $lang['nitrocart:about:modules']                 = 'Manage the NitroCart modules
 $lang['nitrocart:about:settings']                = 'Global settings for NitroCart.';
 $lang['nitrocart:about:products']                = 'Manage the products available in NitroCart.';
 
-/* End of file showcase_details_lang.php */
+/* End of file nitrocart_details_lang.php */

@@ -97,3 +97,5 @@ class Products_m extends MY_Model
     }
 
 }
+
+/* End of file products_m.php */

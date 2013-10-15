@@ -29,3 +29,5 @@ class Nitrocart_m extends MY_Model
 	}
 
 }
+
+/* End of file nitrocart_m.php */
