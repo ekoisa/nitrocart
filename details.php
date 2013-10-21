@@ -35,7 +35,7 @@ class module_nitrocart extends Module
         $this->load->model($this->namespace.'/core/nitrocart_m');
         $this->load->model($this->namespace.'/core/modules_m');
 
-        $modules = $this->modules_m->get_enabled_modules();
+        //$modules = $this->modules_m->get_enabled_modules();
         $modules = array('dashboard', 'modules', 'settings', 'products', 'categories');
         $this->sections = $modules;
         
@@ -140,6 +140,7 @@ class module_nitrocart extends Module
     public function uninstall()
     {
         $this->streams->utilities->remove_namespace($this->namespace);
+        $this->streams->utilities->remove_namespace($this->namespace.'_categories');
 
         return true;
     }

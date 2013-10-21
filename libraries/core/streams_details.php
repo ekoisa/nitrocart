@@ -217,7 +217,6 @@ class Streams_details
 
             foreach($assign_data as $assign_data_row)
             {
-                dump($assign_data_row);
                 if(lang_label($this->lang($assign_data_row['type'], 'instruction')))
                     $assign_data_row['instructions'] = $this->lang($assign_data_row['type'], 'instruction');
 
