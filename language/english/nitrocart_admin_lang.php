@@ -11,6 +11,8 @@ $lang['nitrocart:message:failure']     = 'There was an error. Try it later.';
 
 $lang['nitrocart:message:no_entries']  = 'No entries';
 
+$lang['nitrocart:label:install']       = 'Install';
+$lang['nitrocart:label:uninstall']     = 'Uninstall';
 $lang['nitrocart:label:enable']        = 'Enable';
 $lang['nitrocart:label:disable']       = 'Disable';
 

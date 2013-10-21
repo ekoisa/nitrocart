@@ -27,6 +27,24 @@ class Products_m extends MY_Model
             );
     }
 
+    public function get_fields($skips = array())
+    {
+        $assignments = $this->streams->streams->get_assignments($this->stream, $this->namespace);
+
+        $fields = array();
+        foreach ($assignments as $assigment)
+        {
+            if(
+                in_array($assigment->field_slug, unserialize($assigment->stream_view_options))
+                AND
+                !in_array($assigment->field_slug, $skips)
+                )
+                $fields[] = $assigment->field_slug;
+        }
+
+        return $fields;
+    }
+
     public function get_skips()
     {
         $assignments = $this->streams->streams->get_assignments($this->stream, $this->namespace);

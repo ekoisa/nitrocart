@@ -16,7 +16,7 @@ class module_nitrocart extends Module
 	public $version = '0.9.0';
     public $name = 'Nitrocart';
 	public $namespace = 'nitrocart';
-    public $sections = array('dashboard', 'modules', 'settings', 'products');
+    public $sections;
 
     public function __construct()
     {
@@ -33,6 +33,11 @@ class module_nitrocart extends Module
 
         // Models
         $this->load->model($this->namespace.'/core/nitrocart_m');
+        $this->load->model($this->namespace.'/core/modules_m');
+
+        $modules = $this->modules_m->get_enabled_modules();
+        $modules = array('dashboard', 'modules', 'settings', 'products', 'categories');
+        $this->sections = $modules;
         
     }
 
@@ -149,7 +154,7 @@ class module_nitrocart extends Module
         return "No documentation has been added for this module.<br />Contact the module developer for assistance.";
     }
 
-    public function fields($streams_id, $folders)
+    protected function fields($streams_id, $folders = array())
     {
         $fields = array();
 
@@ -190,40 +195,40 @@ class module_nitrocart extends Module
         return $fields;
     }
 
-    public function default_data()
+    protected function default_data()
     {
-        $entry_data = array(
-            'name' => lang($this->namespace.':label:modules'),
-            'slug' => slugify('modules'),
-            'description' => lang($this->namespace.':about:modules'),
-            'version' => '1.0.0',
-            'core' => 1,
-            'installed' => 1,
-            'enabled' => 1,
+        /* core_modules
+        -------------------------------------------------- */
+        $core_modules = array(
+            'modules' => array('core' => 1, 'installed' => 1, 'enabled' => 1),
+            'settings' => array('core' => 1, 'installed' => 1, 'enabled' => 1),
+            'products' => array('core' => 1, 'installed' => 1, 'enabled' => 1),
             );
-        $this->streams->entries->insert_entry($entry_data, 'modules', $this->namespace);
+        $this->add_modules($core_modules);
 
-        $entry_data = array(
-            'name' => lang($this->namespace.':label:settings'),
-            'slug' => slugify('settings'),
-            'description' => lang($this->namespace.':about:settings'),
-            'version' => '1.0.0',
-            'core' => 1,
-            'installed' => 1,
-            'enabled' => 1,
+        /* addon_modules
+        -------------------------------------------------- */
+        $addon_modules = array(
+            'categories' => array(),
             );
-        $this->streams->entries->insert_entry($entry_data, 'modules', $this->namespace);
+        $this->add_modules($addon_modules);
+    }
 
-        $entry_data = array(
-            'name' => lang($this->namespace.':label:products'),
-            'slug' => slugify('products'),
-            'description' => lang($this->namespace.':about:products'),
-            'version' => '1.0.0',
-            'core' => 1,
-            'installed' => 1,
-            'enabled' => 1,
-            );
-        $this->streams->entries->insert_entry($entry_data, 'modules', $this->namespace);
+    protected function add_modules($modules)
+    {
+        foreach ($modules as $name => $params)
+        {
+            $entry_data = array(
+                'name' => lang($this->namespace.':label:'.$name),
+                'slug' => slugify($name),
+                'description' => lang($this->namespace.':about:'.$name),
+                'version' => (isset($params['version'])) ? $params['version'] : '1.0.0',
+                'core' => (isset($params['core'])) ? $params['core'] : '0',
+                'installed' => (isset($params['installed'])) ? $params['installed'] : '0',
+                'enabled' => (isset($params['enabled'])) ? $params['enabled'] : '0',
+                );
+            $this->streams->entries->insert_entry($entry_data, 'modules', $this->namespace);
+        }
     }
 }
 /* End of file details.php */

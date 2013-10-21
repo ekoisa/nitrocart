@@ -43,6 +43,46 @@ class Modules_m extends MY_Model
         return $this->streams->entries->get_entries($this->params);
     }
 
+    public function get_enabled_modules()
+    {
+        $this->params['where'] = '`installed` = "1" AND `enabled` = "1"';
+        $streams = $this->streams->entries->get_entries($this->params);
+
+        $streams_slug = array();
+        foreach ($streams['entries'] as $stream)
+            $streams_slug = $stream['slug'];
+
+        return $streams_slug;
+    }
+
+    public function installed($module_slug)
+    {
+        $this->update_by('slug', $module_slug, array('installed' => 1));
+    }
+
+    public function uninstalled($module_slug)
+    {
+        $this->update_by('slug', $module_slug, array('installed' => 0));
+    }
+
+    public function enabled($module_slug)
+    {
+        $this->update_by('slug', $module_slug, array('enabled' => 1));
+    }
+
+    public function disabled($module_slug)
+    {
+        $this->update_by('slug', $module_slug, array('enabled' => 0));
+    }
+
+    public function is_enabled($module_slug)
+    {
+        $this->params['where'] = '`slug` = "'.$module_slug.'" AND `installed` = "1" AND `enabled` = "1"';
+        $entries = $this->streams->entries->get_entries($this->params);
+        
+        return ($entries['total'] == 0) ? false : true;
+    }
+
 }
 
 /* End of file modules_m.php */

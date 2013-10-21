@@ -21,7 +21,9 @@ class Admin_products extends Admin_Controller
     {
         parent::__construct();
         $this->load->driver('streams');
+        $this->load->library('core/streams_admin');
         $this->load->language('nitrocart_admin');
+        $this->load->model('core/modules_m');
         $this->load->model('core/products_m');
     }
 

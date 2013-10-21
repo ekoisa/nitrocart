@@ -33,15 +33,15 @@
 									<?php echo $addon_module['version'];?>
 								</td>
 								<td class="actions">
-									<?php if($entry['installed']):?>
-										<?php /*if(!$entry['enabled']):?>
-											<a href="<?php echo site_url('admin/nitrocart/modules/enable/').$addon_module['id'];?>" class="button"><?php echo lang($namespace.':label:enable');?></a>
+									<?php if($addon_module['installed']):?>
+										<?php if(!$addon_module['enabled']):?>
+											<a href="<?php echo site_url('admin/nitrocart/modules/enable/'.$addon_module['slug']);?>" class="button"><?php echo lang($namespace.':label:enable');?></a>
 										<?php else:?>
-											<a href="<?php echo site_url('admin/nitrocart/modules/disable/').$addon_module['id'];?>" class="button"><?php echo lang($namespace.':label:disable');?></a>
-										<?php endif;*/?>
-										<a href="<?php echo site_url('admin/nitrocart/modules/disable/').$addon_module['id'];?>" class="button"><?php echo lang($namespace.':label:uninstall');?></a>
+											<a href="<?php echo site_url('admin/nitrocart/modules/disable/'.$addon_module['slug']);?>" class="button"><?php echo lang($namespace.':label:disable');?></a>
+										<?php endif;?>
+										<a href="<?php echo site_url('admin/nitrocart/modules/uninstall/'.$addon_module['slug']);?>" class="button"><?php echo lang($namespace.':label:uninstall');?></a>
 									<?php else:?>
-										<a href="<?php echo site_url('admin/nitrocart/modules/disable/').$addon_module['id'];?>" class="button"><?php echo lang($namespace.':label:install');?></a>
+										<a href="<?php echo site_url('admin/nitrocart/modules/install/'.$addon_module['slug']);?>" class="button"><?php echo lang($namespace.':label:install');?></a>
 									<?php endif;?>
 								</td>
 							</tr>

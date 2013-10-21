@@ -36,6 +36,40 @@ class Admin_modules extends Admin_Controller
         ->set('core_modules', $core_modules)
         ->build('core/modules/admin/index');
     }
+
+    public function install($module_slug)
+    {
+        $this->load->library('addons/'.$module_slug.'/details');
+        $this->details->install();
+
+        $this->session->set_flashdata('success', lang($this->namespace.':message:success'));
+        redirect('admin/'.$this->namespace.'/'.$this->stream);        
+    }
+
+    public function uninstall($module_slug)
+    {
+        $this->load->library('addons/'.$module_slug.'/details');
+        $this->details->uninstall();
+
+        $this->session->set_flashdata('success', lang($this->namespace.':message:success'));
+        redirect('admin/'.$this->namespace.'/'.$this->stream);        
+    }
+
+    public function enable($module_slug)
+    {
+        $this->modules_m->enabled($module_slug);
+
+        $this->session->set_flashdata('success', lang($this->namespace.':message:success'));
+        redirect('admin/'.$this->namespace.'/'.$this->stream);        
+    }
+
+    public function disable($module_slug)
+    {
+        $this->modules_m->disabled($module_slug);
+
+        $this->session->set_flashdata('success', lang($this->namespace.':message:success'));
+        redirect('admin/'.$this->namespace.'/'.$this->stream);        
+    }
 }
 
 /* End of file admin_modules.php */
