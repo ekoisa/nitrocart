@@ -28,7 +28,7 @@ class module_nitrocart extends Module
 
         // Libraries
         $this->load->library($this->namespace.'/core/enums');
-        $this->load->library($this->namespace.'/core/streams_details');
+        $this->load->library($this->namespace.'/core/streams/streams_details');
         $this->streams_details->set_namespace($this->namespace);
 
         // Models

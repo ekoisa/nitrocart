@@ -19,7 +19,7 @@ class Details
     {
         $this->ci =& get_instance();
 
-        $this->ci->load->library('core/streams_details');
+        $this->ci->load->library('core/streams/streams_details');
         $this->ci->streams_details->set_namespace($this->namespace);
     }
 
