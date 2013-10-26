@@ -35,8 +35,8 @@ class module_nitrocart extends Module
         $this->load->model($this->namespace.'/core/nitrocart_m');
         $this->load->model($this->namespace.'/core/modules_m');
 
-        //$modules = $this->modules_m->get_enabled_modules();
-        $modules = array('dashboard', 'modules', 'settings', 'products', 'categories');
+        $modules = $this->modules_m->get_enabled_modules();
+        array_unshift($modules, 'dashboard');
         $this->sections = $modules;
         
     }
@@ -70,6 +70,13 @@ class module_nitrocart extends Module
                     ),
                 ),
             );
+
+        $addons = $this->modules_m->get_enabled_addons();
+        foreach ($addons as $addon)
+        {
+            $this->load->library($this->namespace.'/addons/'.$addon.'/details');
+            $shortcuts[$addon] = $this->details->info();
+        }
 
         $info['sections'] = $this->streams_details->create_sections($this->sections, $shortcuts);
 

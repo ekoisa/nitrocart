@@ -13,7 +13,7 @@
 
 class Details
 {
-    public $namespace = 'nitrocart_categories';
+    public $namespace = 'nitrocart';
 
     public function __construct()
     {
@@ -21,6 +21,21 @@ class Details
 
         $this->ci->load->library('core/streams/streams_details');
         $this->ci->streams_details->set_namespace($this->namespace);
+
+        $this->ci->load->language($this->namespace.'/categories_details');
+    }
+
+    public function info()
+    {
+        $shortcuts = array(
+            'create' => array(
+                'name'  => $this->namespace.':label:create_category',
+                'uri'   => 'admin/'.$this->namespace.'/categories/create',
+                'class' => 'add',
+                ),
+            );
+
+        return $shortcuts;
     }
 
     public function install()
@@ -59,9 +74,9 @@ class Details
         -------------------------------------------------- */
         $this->ci->streams_details->insert_field_assignments($streams, $fields, $field_assignments);
 
-        /* third_party
+        /* append_fields
         -------------------------------------------------- */
-        $this->third_party();
+        $this->append_fields();
 
         /* default_data
         -------------------------------------------------- */
@@ -72,10 +87,14 @@ class Details
 
     public function uninstall()
     {
-        $this->ci->modules_m->uninstalled('categories');
-        $this->ci->modules_m->disabled('categories');
+        $streams = array('categories');
+        $this->ci->streams_details->delete_streams($streams);
 
-        $this->ci->streams->utilities->remove_namespace($this->namespace);
+        $fields = array('parent', 'category');
+        $this->ci->streams_details->delete_fields($fields);
+
+        $this->ci->modules_m->disabled('categories');
+        $this->ci->modules_m->uninstalled('categories');
 
         return true;
     }
@@ -91,21 +110,30 @@ class Details
 
         /* fields:categories
         -------------------------------------------------- */
-        $fields['name'] = array('type' => 'text', 'unique' => true);
-        $fields['slug'] = array('type' => 'slug', 'extra' => array('slug_field' => 'name', 'space_type' => '-'), 'unique' => true);
-        $fields['description'] = array('type' => 'textarea');
-        $fields['parent'] = array('type' => 'relationship',  'extra' => array('choose_stream' => $streams_id['categories']));
+        $fields['parent'] = array('type' => 'relationship',  'extra' => array('choose_stream' => $streams_id['categories']), 'required' => false);
 
         $this->ci->streams_details->insert_fields($fields);
 
         return $fields;
     }
 
-    public function third_party()
+    public function append_fields()
     {
-        /* fields:products
+        $streams = array('products');
+
+        $streams_id = $this->ci->streams_details->get_streams_id(array('products', 'categories'));
+
+        $field_assignments = array(
+            'products' => array('category')
+            );
+
+        /* stream:products
         -------------------------------------------------- */
-        $fields['category'] = array('type' => 'relationship',  'extra' => array('choose_stream' => $streams_id['categories']), 'locked' => false);
+        $fields['category'] = array('type' => 'relationship',  'extra' => array('choose_stream' => $streams_id['categories']), 'locked' => true);
+
+        $this->ci->streams_details->insert_fields($fields);
+
+        $this->ci->streams_details->insert_field_assignments($streams, $fields, $field_assignments);
     }
 
     protected function default_data()

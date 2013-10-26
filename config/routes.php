@@ -17,6 +17,13 @@ $route['nitrocart/admin/dashboard(:any)?'] = 'admin/admin_modules$1';
 $route['nitrocart/admin/modules(:any)?']   = 'admin/admin_modules$1';
 $route['nitrocart/admin/settings(:any)?']  = 'admin/admin_settings$1';
 $route['nitrocart/admin/products(:any)?']  = 'admin/admin_products$1';
+
+/* addons
+-------------------------------------------------- */
+$route['nitrocart/admin/categories(:any)?']  = 'admin/admin_categories$1';
+
+/* else
+-------------------------------------------------- */
 $route['nitrocart/admin(:any)?']           = 'admin/admin_modules$1';
 
 /* End of file routes.php */

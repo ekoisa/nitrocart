@@ -8,17 +8,11 @@ $lang['nitrocart:label:modules']                 = 'Modules';
 $lang['nitrocart:label:settings']                = 'Settings';
 $lang['nitrocart:label:products']                = 'Products';
 
-// addons
-$lang['nitrocart:label:categories']              = 'Categories';
-
 /* info:shortcuts
 -------------------------------------------------- */
 // products
 $lang['nitrocart:label:create_product']          = 'Create Product';
 $lang['nitrocart:label:custom_fields']           = 'Custom Fields';
-
-// categories
-$lang['nitrocart:label:create_categorie']        = 'Create Category';
 
 /* fields:global
 -------------------------------------------------- */
@@ -67,6 +61,5 @@ $lang['nitrocart:instruction:searchable']        = 'Searchable instruction.';
 $lang['nitrocart:about:modules']                 = 'Manage the NitroCart modules.';
 $lang['nitrocart:about:settings']                = 'Global settings for NitroCart.';
 $lang['nitrocart:about:products']                = 'Manage the products available in NitroCart.';
-$lang['nitrocart:about:categories']              = 'Organize the products into categories.';
 
 /* End of file nitrocart_details_lang.php */

@@ -50,7 +50,19 @@ class Modules_m extends MY_Model
 
         $streams_slug = array();
         foreach ($streams['entries'] as $stream)
-            $streams_slug = $stream['slug'];
+            $streams_slug[] = $stream['slug'];
+
+        return $streams_slug;
+    }
+
+    public function get_enabled_addons()
+    {
+        $this->params['where'] = '`core` = "0" AND `installed` = "1" AND `enabled` = "1"';
+        $streams = $this->streams->entries->get_entries($this->params);
+
+        $streams_slug = array();
+        foreach ($streams['entries'] as $stream)
+            $streams_slug[] = $stream['slug'];
 
         return $streams_slug;
     }
