@@ -35,10 +35,10 @@ class module_nitrocart extends Module
         $this->load->model($this->namespace.'/core/nitrocart_m');
         $this->load->model($this->namespace.'/core/modules_m');
 
-        $modules = $this->modules_m->get_enabled_modules();
+        //$modules = $this->modules_m->get_enabled_modules();
+        $modules = array('modules', 'settings', 'products', 'categories');
         array_unshift($modules, 'dashboard');
         $this->sections = $modules;
-        
     }
 
 	public function info()
@@ -71,7 +71,8 @@ class module_nitrocart extends Module
                 ),
             );
 
-        $addons = $this->modules_m->get_enabled_addons();
+        //$addons = $this->modules_m->get_enabled_addons();
+        $addons = array('categories');
         foreach ($addons as $addon)
         {
             $this->load->library($this->namespace.'/addons/'.$addon.'/details');
@@ -147,7 +148,6 @@ class module_nitrocart extends Module
     public function uninstall()
     {
         $this->streams->utilities->remove_namespace($this->namespace);
-        $this->streams->utilities->remove_namespace($this->namespace.'_categories');
 
         return true;
     }
