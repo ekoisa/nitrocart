@@ -1,3 +1,0 @@
-[submodule "libraries/core/streams"]
-	path = libraries/core/streams
-	url = https://github.com/LorenzoGarcia/pyrocms-streams-details
