@@ -15,8 +15,8 @@ class module_nitrocart extends Module
 {
 	public $version = '0.9.0';
     public $name = 'Nitrocart';
-	public $namespace = 'nitrocart';
-    public $sections;
+    public $namespace = 'nitrocart';
+    public $sections = array();
 
     public function __construct()
     {
@@ -25,6 +25,7 @@ class module_nitrocart extends Module
 
         // Languages
         $this->load->language($this->namespace.'/nitrocart_details');
+        $this->load->language($this->namespace.'/categories_details');
 
         // Libraries
         $this->load->library($this->namespace.'/core/enums');
@@ -35,27 +36,29 @@ class module_nitrocart extends Module
         $this->load->model($this->namespace.'/core/nitrocart_m');
         $this->load->model($this->namespace.'/core/modules_m');
 
-        //$modules = $this->modules_m->get_enabled_modules();
-        $modules = array('modules', 'settings', 'products', 'categories');
-        array_unshift($modules, 'dashboard');
-        $this->sections = $modules;
+        if (is_installed($this->namespace))
+        {
+            $modules = $this->modules_m->get_enabled_modules();
+            array_unshift($modules, 'dashboard');
+            $this->sections = $modules;
+        }
     }
 
-	public function info()
-	{
-		$info =  array(
-			'name' => array(
-				'en' => 'NitroCart',
-				),
-			'description' => array(
-				'en' => 'Turbo Powered Shopping - for PyroCMS!',
-				),
-			'skip_xss' => true,
-			'frontend' => true,
-			'backend' => true,
-			'menu' => false,
-			'author' => 'NitroCart Dev Team',
-			);
+    public function info()
+    {
+        $info =  array(
+            'name' => array(
+                'en' => 'NitroCart',
+                ),
+            'description' => array(
+                'en' => 'Turbo Powered Shopping - for PyroCMS!',
+                ),
+            'skip_xss' => true,
+            'frontend' => true,
+            'backend' => true,
+            'menu' => false,
+            'author' => 'NitroCart Dev Team',
+            );
 
         $shortcuts = array(
             'products' => array(
@@ -83,7 +86,7 @@ class module_nitrocart extends Module
 
         return $info;
     }
-    
+
     public function admin_menu(&$menu)
     {
         $menu[$this->name] = $this->streams_details->create_admin_menu($this->sections, $this->namespace);
